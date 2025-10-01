@@ -69,18 +69,21 @@ We implemented and compared two state-of-the-art models:
 
 ---
 
-## 📈 Visualizations
-- Training/Validation loss curves
-- Inference examples with bounding boxes & masks
+
   
 
+## 📈 Visualizations
+
+### Training/Validation Loss for Masked R-CNN
+<img src="images/Train_Validation_masked_rcnn.png" width="400"/>
+
+### Inference Examples – Masked R-CNN
+<img src="images/Masked_rcnn1.png" width="400"/>
+
+### Inference Examples – YOLOv8
+<img src="predicted_images_yolov8/527be217-trash10.jpg" width="400"/>
 
 
----
 
-## 🚀 How to Run
 
-### 1️⃣ Clone Repository
-```bash
-git clone https://github.com/<your-username>/trash-detection-capstone.git
-cd trash-detection-capstone
+
