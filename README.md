@@ -69,9 +69,6 @@ We implemented and compared two state-of-the-art models:
 
 ---
 
-
-  
-
 ## 📈 Visualizations
 
 ### Training/Validation Loss for Masked R-CNN
@@ -83,7 +80,90 @@ We implemented and compared two state-of-the-art models:
 ### Inference Examples – YOLOv8
 <img src="predicted_images_yolov8/527be217-trash10.jpg" width="400"/>
 
+---
 
+# 🚀 Phase 2 – YOLOv8-Segmentation + Pseudo-Labeling + GIS Integration
 
+## 🎯 Project Update
+In this phase, the project expanded from pure detection:
+1. **YOLOv8-Segmentation (yolov8s-seg.pt)** for instance segmentation.  
+2. **Semi-supervised pseudo-labeling** to auto-annotate unlabeled data.  
+3. **Folium + DBSCAN** for geo-spatial hotspot visualization.  
+4. **SARIMAX** forecasting for weekly litter trend prediction.
 
+---
 
+## 📂 Dataset 
+
+| Split | Images | Labels | Objects (`Trash`) |
+|:--|:--:|:--:|:--:|
+| **Train** | 56 | 56 | 164 |
+| **Validation** | 14 | 14 | 43 |
+| **Unlabeled** | 389 | – | – |
+
+- Single class → `Trash`  
+- Augmentations: mosaic, mixup, color jitter, random affine  
+- All runs executed on Colab (T4 GPU)
+
+---
+
+## ⚙️ Model Configuration
+
+| Parameter | Setting |
+|:--|:--|
+| Architecture | YOLOv8-Seg (small variant `yolov8s-seg.pt`) |
+| Task | Instance Segmentation |
+| Image Size | 896 × 896 px |
+| Epochs | 60 |
+| Batch Size | 8 |
+| Optimizer | AdamW (lr = 0.01) |
+
+---
+
+## 🔁 Semi-Supervised Pseudo-Labeling
+High-confidence predictions (`conf ≥ 0.6`) on unlabeled images were converted to YOLO labels and merged with the training set, then retrained for 60 epochs.
+
+---
+
+## 📊 Evaluation – Baseline vs After Pseudo-Labeling
+
+| Metric | Baseline | After-Pseudo | Δ |
+|:--|:--:|:--:|:--:|
+| Precision | 0.47 | **0.51** | +0.04 |
+| Recall | 0.39 | **0.54** | **+0.15** |
+| mAP@50 | 0.40 | **0.46** | +0.06 |
+| mAP@50–95 | 0.26 | **0.27** | +0.01 |
+
+📈 **Result:** Recall improved by 15 %, confirming that pseudo-labeling successfully expanded the model’s detection coverage.
+
+---
+
+## 🧩 Figures
+
+### Baseline Training Loss Curves
+<img src="images/baseline_loss_curves.png" width="400"/>
+
+### Baseline vs After-Pseudo Performance
+<img src="images/metrics_comparison_bar.png" width="400"/>
+
+### YOLOv8-Seg Predictions
+<img src="images/detections_side_by_side.png" width="400"/>
+
+### Loss Curve Comparison
+<img src="images/after_loss_curves.png" width="400"/>
+
+| Figure | Description |
+|:--|:--|
+| **1 – Baseline Training Loss Curves** | Loss convergence for initial training. | 
+| **2 – Baseline vs After-Pseudo Performance** | Bar chart comparing Precision/Recall/mAP. |  
+| **3 – YOLOv8-Seg Predictions** | Side-by-side detections showing mask accuracy improvement. | 
+| **4 – Loss Curve Comparison** | Smoother and earlier stabilization after retraining. | 
+
+---
+
+## 🌍 Geo-Spatial Heatmap & Clustering
+
+To analyze litter hotspots, a Folium + DBSCAN module was used:
+
+```python
+DBSCAN(eps=0.002, min_samples=8)
