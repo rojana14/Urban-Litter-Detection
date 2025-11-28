@@ -89,7 +89,6 @@ In this phase, the project expanded from pure detection:
 1. **YOLOv8-Segmentation (yolov8s-seg.pt)** for instance segmentation.  
 2. **Semi-supervised pseudo-labeling** to auto-annotate unlabeled data.  
 3. **Folium + DBSCAN** for geo-spatial hotspot visualization.  
-4. **SARIMAX** forecasting for weekly litter trend prediction.
 
 ---
 
