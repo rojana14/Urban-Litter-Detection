@@ -225,7 +225,10 @@ Features:
 - DBSCAN revealed clear trash-dense regions  
 
 ### ✔️ Delivered High-Quality Visualization  
-- Interactive HTML heatmap (`litter_heatmap_clusters.html`)  
+- Interactive HTML heatmap (`litter_heatmap_clusters.html`)
+  
+### Geo Spatial Analysis of Rochester  
+<img src="images/gis_rochester.png" width="400"/>
 
 ---
 
