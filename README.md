@@ -160,9 +160,75 @@ High-confidence predictions (`conf ≥ 0.6`) on unlabeled images were converted 
 
 ---
 
-## 🌍 Geo-Spatial Heatmap & Clustering
+## 🚀 Phase 3- Geo Spatial Analysis
 
-To analyze litter hotspots, a Folium + DBSCAN module was used:
 
-```python
-DBSCAN(eps=0.002, min_samples=8)
+## 1. ☀️ Executive Summary  
+This month’s work focused on scaling geospatial analysis, improving trash detection inference, and generating a high-quality confidence-weighted litter density heatmap for Rochester, NY.
+
+This month included:  
+- YOLO segmentation-based inference on ~60 spatial points  
+- Extraction of confidence-weighted trash scores  
+- DBSCAN-based hotspot clustering  
+- Construction of a large-scale interactive Folium heatmap  
+
+The main deliverable is an **interactive HTML heatmap** representing trash density across Rochester.
+
+---
+
+## 2. 🧪 Experiments & Methods  
+
+### **2.1 YOLO Segmentation Inference**  
+- Processed all collected coordinates using YOLO segmentation models  
+- Extracted masks, bounding boxes, detection scores  
+- Computed a confidence-weighted trash score per location  
+
+---
+
+### **2.2 DBSCAN Hotspot Clustering**  
+Parameters used:  
+- `eps = 0.002`  
+- `min_samples = 8`  
+
+Why DBSCAN?  
+- Detects hotspots without specifying the number of clusters  
+- Handles irregular shapes  
+- Removes noise automatically  
+
+Outputs:  
+- Cluster labels  
+- Density-based hotspot identification  
+
+---
+
+### **2.3 Folium Interactive Heatmap**  
+Built using:  
+- `folium.Map()`  
+- `folium.plugins.HeatMap()`  
+
+Features:  
+- Color-coded intensity (green → red)  
+- Zoomable, interactive  
+- Uses latitude, longitude and trash-confidence weights  
+
+---
+
+## 3. 📈 Key Results  
+
+### ✔️ Expanded Spatial Coverage  
+- Increased sampling from **14 → ~60** locations  
+
+### ✔️ Better Density Mapping  
+- Confidence-weighted scoring improved hotspot accuracy  
+
+### ✔️ Effective Clustering  
+- DBSCAN revealed clear trash-dense regions  
+
+### ✔️ Delivered High-Quality Visualization  
+- Interactive HTML heatmap (`litter_heatmap_clusters.html`)  
+
+---
+
+
+
+
